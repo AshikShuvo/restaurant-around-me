@@ -1,13 +1,13 @@
 import { PageHeader, Tag } from 'antd'
 import React from 'react'
 import './NavBar.css'
-const NavBar = () => {
+const NavBar = ({locationName}) => {
     return (
         <PageHeader
         className="site-page-header"
         title="Restaurant Around Me"
         subTitle="Access to Your Location Is Required"
-        extra={[<Tag color="blue" key='3'>Nikunja 2</Tag>]}
+        extra={[<Tag color="blue" key='3'>{locationName}</Tag>]}
       />
        
     )
