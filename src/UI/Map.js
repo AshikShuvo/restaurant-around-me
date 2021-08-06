@@ -1,12 +1,17 @@
+
 import React, { useEffect, useRef } from 'react'
 import restaurantIcon from '../assets/restaurantMarker.svg';
 const { google } = window;
+
 const Map = ({userLocation,restaurants}) => {
+    console.log('render')
     const mapRef = useRef(null);
     let userLatlng = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
+
     useEffect(() => {
         initGoogleMap();
     });
+
     const initGoogleMap = () => {
 
         let map = new google.maps.Map(mapRef.current, {
@@ -17,7 +22,7 @@ const Map = ({userLocation,restaurants}) => {
             position: userLatlng,
             title: "User Location",
             map: map
-        });
+        },[]);
 
         if (restaurants) {
             let icon = {
@@ -31,29 +36,19 @@ const Map = ({userLocation,restaurants}) => {
             restaurants.forEach(({ name, location }) => {
                 new google.maps.Marker({
                     position: new google.maps.LatLng(location.lat, location.lng),
-                    title: name,
+                    
                     animation: google.maps.Animation.DROP,
                     icon,
-                    map: map
+                    map: map,
+                    label:name
+                    
                 });
             });
         }
-        // if (getDirection) {
-        //     const selectedAddress = new window.google.maps.LatLng(restaurantLocation.lat, restaurantLocation.lng);
-        //     directionService.setMap(map)
-        //     drawRoute();
-        //     let bounds = new window.google.maps.LatLngBounds();
-        //     bounds.extend(selectedAddress);
-        //     bounds.extend(userLatlng);
-        //     map.fitBounds(bounds);
-        // } else {
-        //     initSearchBox();
-        // }
-
     }
     return (
         <>
-            <div style={{ height: "100vh", width: "100%" }} ref={mapRef} />
+            {userLocation&&<div style={{ height: "100vh", width: "100%" }} ref={mapRef} />}
         </>
     )
 }
@@ -63,4 +58,6 @@ Map.defaultProps={
         longitude:90.41676420000002
     }
 }
+
+
 export default Map
