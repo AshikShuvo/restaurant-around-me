@@ -1,25 +1,26 @@
-
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import restaurantIcon from '../assets/restaurantMarker.svg';
-const { google } = window;
+const { google } = window; //window got accessed to google map related services api via script attached in public/index.html
 
 const Map = ({userLocation}) => {
-    const restaurants=useSelector(state=>state.restaurantsState.restaurants);
-    const mapRef = useRef(null);
-    let userLatlng = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
+
+    const restaurants=useSelector(state=>state.restaurantsState.restaurants);//getting restaurants data from store
+    const mapRef = useRef(null); //reference to the div where the map will be mounted
+    let userLatlng = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);//used by google place api
 
     useEffect(() => {
         initGoogleMap();
     });
 
     const initGoogleMap = () => {
-
+        //initializing google map provided by google place api
         let map = new google.maps.Map(mapRef.current, {
             zoom: 15,
             center: userLatlng
         });
         new google.maps.Marker({
+            //positioning the marker on users current location
             position: userLatlng,
             title: "User Location",
             map: map
@@ -34,15 +35,14 @@ const Map = ({userLocation}) => {
                 scaledSize: new google.maps.Size(35, 45)
             };
 
-            restaurants.forEach(({ id,name, location }) => {
+            restaurants.forEach(({ name, location }) => {
+                //marking restaurants location
                 new google.maps.Marker({
                     position: new google.maps.LatLng(location.lat, location.lng),
-                    
                     animation: google.maps.Animation.DROP,
                     icon,
                     map: map,
                     label:name,
-                    key:id
                 });
             });
         }

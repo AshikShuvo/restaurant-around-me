@@ -2,7 +2,7 @@ import React from 'react'
 import { Card } from 'antd';
 import './RestaurantItem.css';
 const RestaurantItem = ({data}) => {
-   
+   //renders a single restaurant
     return (
         <Card>
             <div className="custom-image">

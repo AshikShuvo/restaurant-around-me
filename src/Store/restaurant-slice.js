@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+//act as an slice of redux store 
+//all the logical action and mutation related to restaurants can be managed here
+
 const restaurantsSlice=createSlice({
     name:'restaurantsState',
     initialState:{
@@ -10,6 +13,7 @@ const restaurantsSlice=createSlice({
         }
     }
 })
+
 export const restaurantsActions=restaurantsSlice.actions;
 
 export default restaurantsSlice;

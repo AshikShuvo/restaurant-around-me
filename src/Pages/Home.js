@@ -1,6 +1,3 @@
-/*
-    this is the home page which will be treated as an home page.
-*/
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { restaurantsActions } from '../Store/restaurant-slice';
@@ -13,22 +10,25 @@ import Map from '../UI/Map';
 const {  Footer,Content } = Layout;
 
 const Home = () => {
-    const dispatch=useDispatch();
-    const [userLocation, setUserLocation] = useState({latitude:23.8349877,longitude:90.41676420000002});
-    const [searchArea]=useState(3000);
+    const dispatch=useDispatch(); //dispatcher for dispatching an action to populate the store;
+    const [userLocation, setUserLocation] = useState({latitude:23.8349877,longitude:90.41676420000002});//local state to hold the user location coordinate.initialized by my coordinate used if the user denied location permission
+    const [searchArea]=useState(3000);//searching area initialized with 3km.
 
    
     useEffect(()=>{
+        //will ask for location when the application is accessed for first time
         getCurrentLocation();
     },[]);
     useEffect(()=>{
+        //will fetch all restaurants data from fouresquire api each time the userLocation changed.
         fetchRestaurantData();
     },[userLocation])
     
 
 
-    const getCurrentLocation=()=>{
-        if (navigator && navigator.geolocation) {
+    const getCurrentLocation=()=>{ 
+        //function to get user location and populate the local state named userLocation
+        if (navigator && navigator.geolocation) {//check first if the browser support navigator
             navigator.geolocation.getCurrentPosition((currentPosition) => {
                 setUserLocation({...userLocation,latitude:currentPosition.coords.latitude,longitude:currentPosition.coords.longitude});
             });
@@ -58,6 +58,7 @@ const Home = () => {
               restaurants.push(restaurant);
 
           })
+          //dispatching an action to populate restaurantsState belongs to root state in the redux store with all fetched restaurants data
           dispatch(restaurantsActions.setRestaurants(restaurants))
         })
         .catch(err => console.error(err));

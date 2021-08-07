@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux';
 import RestaurantItem from './RestaurantItem';
 
 const Restaurants = () => {
-    const restaurants=useSelector(state=>state.restaurantsState.restaurants);
-    const [searchKey,setSearchKey]=useState('')
+    const restaurants=useSelector(state=>state.restaurantsState.restaurants);//getting restaurants data from store
+    const [searchKey,setSearchKey]=useState('');//state to hold users search string
     const handleChange=(e)=>{
+        //invoked each time when user change the input value of search box to set search key
         setSearchKey(e.target.value);
     }
     return (
