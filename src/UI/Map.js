@@ -1,10 +1,11 @@
 
 import React, { useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux';
 import restaurantIcon from '../assets/restaurantMarker.svg';
 const { google } = window;
 
-const Map = ({userLocation,restaurants}) => {
-    console.log('render')
+const Map = ({userLocation}) => {
+    const restaurants=useSelector(state=>state.restaurantsState.restaurants);
     const mapRef = useRef(null);
     let userLatlng = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
 
@@ -33,15 +34,15 @@ const Map = ({userLocation,restaurants}) => {
                 scaledSize: new google.maps.Size(35, 45)
             };
 
-            restaurants.forEach(({ name, location }) => {
+            restaurants.forEach(({ id,name, location }) => {
                 new google.maps.Marker({
                     position: new google.maps.LatLng(location.lat, location.lng),
                     
                     animation: google.maps.Animation.DROP,
                     icon,
                     map: map,
-                    label:name
-                    
+                    label:name,
+                    key:id
                 });
             });
         }

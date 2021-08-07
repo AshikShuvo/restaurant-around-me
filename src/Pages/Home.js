@@ -2,7 +2,8 @@
     this is the home page which will be treated as an home page.
 */
 import React, { useEffect, useState } from 'react'
-// import Map from '../UI/MapContainer'
+import { useDispatch } from 'react-redux';
+import { restaurantsActions } from '../Store/restaurant-slice';
 import NavBar from '../UI/NavBar'
 import Restaurants from '../UI/Restaurants'
 import './Home.css';
@@ -12,9 +13,10 @@ import Map from '../UI/Map';
 const {  Footer,Content } = Layout;
 
 const Home = () => {
+    const dispatch=useDispatch();
     const [userLocation, setUserLocation] = useState({latitude:23.8349877,longitude:90.41676420000002});
     const [searchArea]=useState(3000);
-    const [restaurants,setRestaurants]=useState([]);
+
    
     useEffect(()=>{
         getCurrentLocation();
@@ -56,7 +58,7 @@ const Home = () => {
               restaurants.push(restaurant);
 
           })
-          setRestaurants(restaurants);
+          dispatch(restaurantsActions.setRestaurants(restaurants))
         })
         .catch(err => console.error(err));
     }
@@ -72,7 +74,7 @@ const Home = () => {
                 minHeight: 400,
             }}
             className="mapLayoutBackground">
-               <Map userLocation={userLocation} restaurants={restaurants}/>
+               <Map userLocation={userLocation} />
             </Content>
             <Content style={{
                 padding: 20,
@@ -81,7 +83,7 @@ const Home = () => {
             }}
             className="mapLayoutBackground"
             >
-                <Restaurants restaurants={restaurants} />
+                <Restaurants />
             </Content>
             <Footer style={{ textAlign: 'center', }}>Thank You for Using This APP </Footer>
         </Layout>

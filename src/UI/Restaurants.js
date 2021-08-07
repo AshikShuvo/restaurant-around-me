@@ -1,9 +1,11 @@
 import { Col, Input, Row } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import RestaurantItem from './RestaurantItem';
 
-const Restaurants = ({restaurants}) => {
+const Restaurants = () => {
+    const restaurants=useSelector(state=>state.restaurantsState.restaurants);
     const [searchKey,setSearchKey]=useState('')
     const handleChange=(e)=>{
         setSearchKey(e.target.value);
@@ -24,8 +26,6 @@ const Restaurants = ({restaurants}) => {
         </>
     )
 }
-Restaurants.defaultProps={
-    restaurants:[],
-}
+
 
 export default Restaurants

@@ -1,4 +1,4 @@
-import { PageHeader, Tag } from 'antd'
+import { PageHeader } from 'antd'
 import React from 'react'
 import './NavBar.css'
 const NavBar = () => {
